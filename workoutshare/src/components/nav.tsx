@@ -15,6 +15,7 @@ const [clicked, setclicked]= useState(false)
     <div className="nav-contents">
     <nav className="nav-bar">
       <Link to='/'>Home</Link>
+      <Link to='/register'>Register</Link>
       <button onClick={handleClick}>a</button>
     </nav>
     {clicked ?  <div className="terinary-div">
