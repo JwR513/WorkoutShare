@@ -1,5 +1,7 @@
-import { stringify } from "querystring"
+import axios from "axios"
 import { useState, useEffect } from "react"
+import { Server } from '../components/globals'
+
 
 
 interface Props{
@@ -10,29 +12,25 @@ setLogStatus:Function,
 
 export const Home:  React.FunctionComponent<Props> = (props)=>{
 
-interface form {
-    username: String,
-    password: String
-}
 
-const iniFormVal: form = {
+const iniFormVal = {
   username: '',
   password: ''
 }
 
-
 const [formVal, setFormVal]= useState(iniFormVal)
-
-const login = (e: any) =>{
-  e.preventDefault()
-
-
-}
 
 const handleChange = (e: any)=>{
   e.preventDefault()
   setFormVal({...formVal, [e.target.name]: e.target.value})
-  console.log(formVal)
+}
+
+const login = async(e: any) =>{
+  e.preventDefault()
+  const res = await axios.post(`${Server}/api/token/`, formVal)
+  props.setLogStatus(true)
+  console.log(res)
+ localStorage.setItem('token', res.data.refresh)
 }
 
 const logInStuff =

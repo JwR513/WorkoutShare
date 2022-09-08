@@ -1,11 +1,12 @@
 import axios from "axios"
 import { useState } from "react"
 import { Server } from "../components/globals"
+import { RegisterPlayer } from "../services/auth"
 
 
 export const RegisterPage =()=>{
 
-  console.log(Server)
+const[success, setSuccess]=useState(false)
 
   const [formValues, setFormValues] = useState({
     username: '',
@@ -16,22 +17,20 @@ export const RegisterPage =()=>{
   
   const signUpFormVal = (e: any) =>{
     setFormValues({...formValues, [e.target.name]: e.target.value }) 
-    console.log(formValues)
   }
   const confPasswordChange =(e: any)=>{
     setConf(e.target.value)
-    console.log(conf)
   }
   const signUpCall =async(e: any)=>{
     e.preventDefault()
     if(conf ===  formValues.password){
-      const res = await axios.post(`${Server}/api/signup/`, formValues)
-      console.log(res)
+      await RegisterPlayer(formValues)
+      setSuccess(true)
+    }else{
+
     }
   }
   
-
-
   return(
     <div className="form-div">
       <form onSubmit={signUpCall}>

@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom"
 import { useState } from "react"
+
+
 export const Nav =()=>{
 
 const [clicked, setclicked]= useState(false)
@@ -16,7 +18,7 @@ const [clicked, setclicked]= useState(false)
     <nav className="nav-bar">
       <Link to='/'>Home</Link>
       <Link to='/register'>Register</Link>
-      <button onClick={handleClick}>a</button>
+      <button onClick={handleClick}></button>
     </nav>
     {clicked ?  <div className="terinary-div">
         <Link to='/profile'>My Profile</Link>
