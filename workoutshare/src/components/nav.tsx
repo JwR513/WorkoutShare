@@ -1,10 +1,17 @@
 import { Link } from "react-router-dom"
-import { useState } from "react"
+import React, { useState } from "react"
+import { useNavigate } from 'react-router-dom'
+
+interface Props{
+  logStatus: boolean,
+  setUsername: Function,
+}
 
 
-export const Nav =()=>{
+export const Nav: React.FunctionComponent<Props> =({setUsername, logStatus})=>{
 
 const [clicked, setclicked]= useState(false)
+let navigate =useNavigate()
 
   const handleClick = ()=>{
     if(clicked){
@@ -13,6 +20,14 @@ const [clicked, setclicked]= useState(false)
       setclicked(true)
     }
   }
+
+  const logOut =()=>{
+    localStorage.removeItem('token')
+    localStorage.removeItem('username')
+    setUsername('')
+    navigate('/')
+  }
+
   return(
     <div className="nav-contents">
     <nav className="nav-bar">
@@ -23,6 +38,7 @@ const [clicked, setclicked]= useState(false)
     {clicked ?  <div className="terinary-div">
         <Link to='/profile'>My Profile</Link>
         <Link to='/mysplits'>My splits</Link>
+        <button onClick={logOut}>Log Out</button>
       </div> : <p></p> }
     </div>
   )

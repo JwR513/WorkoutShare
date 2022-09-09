@@ -2,12 +2,13 @@ import Client from './api'
 import { Server } from '../components/globals'
 import axios from 'axios'
 
+//authenticate user
 export const SignInUser = async (data) => {
   try {
     const res = await Client.post(`/api/token/`, data)
     // Set the current signed in users token to localStorage
     localStorage.setItem('token', res.data.access)
-    return res.data.username
+    return res.data
   } catch (error) {
     throw error
   }

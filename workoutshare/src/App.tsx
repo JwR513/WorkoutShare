@@ -12,6 +12,7 @@ const App:React.FunctionComponent =() => {
 
 const [clicked, setClicked]= useState(true)
 const [logStatus, setLogStatus] =useState(false)
+const [username,setUsername]=useState('')
 
 const navHandleClick =()=>{
   if(clicked){
@@ -22,15 +23,20 @@ const navHandleClick =()=>{
 }
 const obtn = <button onClick={navHandleClick} id='nav-btn'>onclick</button>
 
+const terALT =()=>{
+  if(clicked){
+    return obtn
+  }
+}
 
   return (
     <div>
-      {clicked ? <Nav /> : obtn }
-      {clicked ?  obtn :<p></p> }
+      {clicked ? <Nav setUsername={setUsername} logStatus={logStatus}/> : obtn }
+      {terALT()}
       <div className="App">
         <Routes>
-          <Route path='/' element={<Home logStatus={logStatus} setLogStatus={setLogStatus} />}/>
-          <Route path='/profile' element={<Profile logStatus={logStatus} setLogStatus={setLogStatus}/>}/>
+          <Route path='/' element={<Home setUsername={setUsername} logStatus={logStatus} setLogStatus={setLogStatus} />}/>
+          <Route path='/profile' element={<Profile username={username} logStatus={logStatus} setLogStatus={setLogStatus}/>}/>
           <Route path='/mysplits' element={<MySplits />}/>
           <Route path='/register' element={<RegisterPage />} />
         </Routes>

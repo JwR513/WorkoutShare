@@ -2,16 +2,19 @@ import axios from "axios"
 import { useState, useEffect } from "react"
 import { Server } from '../components/globals'
 import {SignInUser } from "../services/auth"
+import  { WorkoutCard } from '../components/workoutcard'
+
 
 
 
 interface Props{
 logStatus: boolean,
 setLogStatus:Function,
+setUsername: Function
 }
 
 
-export const Home:  React.FunctionComponent<Props> = (props)=>{
+export const Home:  React.FunctionComponent<Props> = ({setLogStatus, setUsername, logStatus})=>{
 
 
 const iniFormVal = {
@@ -20,6 +23,14 @@ const iniFormVal = {
 }
 
 const [formVal, setFormVal]= useState(iniFormVal)
+const [splits, setSplits]= useState([])
+
+
+const GetSplits = async () => {
+  const res = await axios.get(`${Server}/splits/`)
+  setSplits(res.data)
+  console.log(res.data)
+}
 
 const handleChange = (e: any)=>{
   e.preventDefault()
@@ -28,11 +39,21 @@ const handleChange = (e: any)=>{
 
 const login = async(e: any) =>{
   e.preventDefault()
-  const res = await SignInUser(formVal)
-  props.setLogStatus(true)
+  await SignInUser(formVal)
+  setUsername(formVal.username)
   
+  setLogStatus(true)
+  GetSplits()
 }
 
+
+useEffect(()=>{
+    let token =localStorage.getItem('token')
+    if(token){
+    setLogStatus(true)
+    }
+    GetSplits()
+},[])
 
 
 const logInStuff =
@@ -45,14 +66,15 @@ const logInStuff =
 </div>
 
 
-const splits = 
+const splitsDisplay = 
 <div>
-  {}
+  <h1>Split Feed</h1>
+  <WorkoutCard splits={splits}/>
 </div>
 
 return(
   <div className="home-page">
-    {props.logStatus ? <p>logged in</p> : logInStuff}
+    {logStatus ? splitsDisplay : logInStuff}
   </div>
 )
 }
