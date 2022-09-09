@@ -1,7 +1,7 @@
 import Axios from 'axios'
 import { Server } from '../components/globals'
 
-const Client = Axios.create({ server: Server })
+const Client = Axios.create({ baseURL: Server })
 
 Client.interceptors.request.use(
   (config) => {

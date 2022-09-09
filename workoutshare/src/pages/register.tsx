@@ -1,7 +1,7 @@
 import axios from "axios"
 import { useState } from "react"
 import { Server } from "../components/globals"
-import { RegisterPlayer } from "../services/auth"
+import { RegisterUser} from "../services/auth"
 
 
 export const RegisterPage =()=>{
@@ -24,7 +24,7 @@ const[success, setSuccess]=useState(false)
   const signUpCall =async(e: any)=>{
     e.preventDefault()
     if(conf ===  formValues.password){
-      await RegisterPlayer(formValues)
+      await RegisterUser(formValues)
       setSuccess(true)
     }else{
 

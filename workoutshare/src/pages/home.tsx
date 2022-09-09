@@ -1,6 +1,7 @@
 import axios from "axios"
 import { useState, useEffect } from "react"
 import { Server } from '../components/globals'
+import {SignInUser } from "../services/auth"
 
 
 
@@ -27,10 +28,9 @@ const handleChange = (e: any)=>{
 
 const login = async(e: any) =>{
   e.preventDefault()
-  const res = await axios.post(`${Server}/api/token/`, formVal)
+  const res = await SignInUser(formVal)
   props.setLogStatus(true)
-  console.log(res)
- localStorage.setItem('token', res.data.refresh)
+  
 }
 
 const logInStuff =
@@ -41,6 +41,9 @@ const logInStuff =
     <input type="submit"/>
   </form>
 </div>
+
+
+const splits = <div></div>
 
 return(
   <div className="home-page">

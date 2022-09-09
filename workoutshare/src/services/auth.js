@@ -1,8 +1,10 @@
 import Client from './api'
+import { Server } from '../components/globals'
+import axios from 'axios'
 
-export const SignInPlayer = async (data: any) => {
+export const SignInUser = async (data) => {
   try {
-    const res = await Client.post(`/api/token`, data)
+    const res = await Client.post(`/api/token/`, data)
     // Set the current signed in users token to localStorage
     localStorage.setItem('token', res.data.access)
     return res.data.username
@@ -11,9 +13,9 @@ export const SignInPlayer = async (data: any) => {
   }
 }
 
-export const RegisterPlayer = async (data: any) => {
+export const RegisterUser = async (data) => {
   try {
-    const res = await Client.post(`/api/signup/`, data)
+    const res = await axios.post(`${Server}/api/signup/`, data)
     return res.data
   } catch (error) {
     throw error
