@@ -33,6 +33,8 @@ const login = async(e: any) =>{
   
 }
 
+
+
 const logInStuff =
 <div className="form-div">
   <form onSubmit={login} >
@@ -43,7 +45,10 @@ const logInStuff =
 </div>
 
 
-const splits = <div></div>
+const splits = 
+<div>
+  {}
+</div>
 
 return(
   <div className="home-page">
