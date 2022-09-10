@@ -9,38 +9,46 @@ interface Props{
 }
 
 export const Profile: React.FunctionComponent<Props> = ({logStatus, username, setLogStatus}):JSX.Element =>{
-let currentUser = {}
 
-const getUser = async()=>{
-  if(logStatus){
-  let res = await axios.get(`${Server}/users/`)
-  const users = res.data
-  users.forEach( (user: any) => {
-    if(user.username === username){
-      currentUser = user
-    }
-  });
 
-  console.log(res.data)
-  console.log(username)
-  console.log(currentUser)
-}
-}
+//this feels like a super suboptimal way to do this but it was the easiest way I could think of
+// may change later
 
-useEffect(()=>{
-  getUser()
+// const getUser = async()=>{
+//   let userId 
+//   if(logStatus){
+
+//     let res = await axios.get(`${Server}/users/`)
+//     const users = res.data
+
+//   users.forEach( (user: any) => {
+//     if(user.username === username){
+//       setCurrentUser({
+//         username: user.username,
+//         email: user.email,
+//         id
+//       })
+//     }
+//   });
+// }
+// let res = await axios.get(`${Server}/users/${userId}`)
+// currentUser = res.data
+// }
+
+
+
+// useEffect(()=>{
   
-},[])
+// },[])
 
 const loggedIn = 
 <div>
-  <h1></h1>
+  
 </div>
 
   return(
     <div>
       <h1>This will be profile page</h1>
-      
     </div>
   )
 } 

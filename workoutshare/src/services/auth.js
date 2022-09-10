@@ -32,3 +32,17 @@ export const CheckSession = async () => {
     throw error
   }
 }
+
+export const GetSplits = async () => {
+  try {
+    const res = await Client.get('/splits/')
+    console.log(res)
+    return res
+  } catch (error) {
+    return error
+  }
+}
+
+export const CreateSplit = async (data) => {
+  let res = await Client.post(`/splits/`, data)
+}
