@@ -1,6 +1,7 @@
 import Client from './api'
 import { Server } from '../components/globals'
 import axios from 'axios'
+import { idText } from 'typescript'
 
 //authenticate user
 export const SignInUser = async (data) => {
@@ -37,12 +38,26 @@ export const GetSplits = async () => {
   try {
     const res = await Client.get('/splits/')
     console.log(res)
-    return res
+    return res.data
   } catch (error) {
     return error
   }
 }
 
 export const CreateSplit = async (data) => {
-  let res = await Client.post(`/splits/`, data)
+  try {
+    let res = await Client.post(`/splits/`, data)
+    return res.data
+  } catch (error) {
+    throw error
+  }
 }
+
+// export const UpdateSplit = async () => {
+//   try {
+//     let res = await Client.put(`/splits/${split.id}`)
+//     return res.data
+//   } catch (error) {
+//     throw error
+//   }
+// }

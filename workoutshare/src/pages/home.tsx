@@ -7,15 +7,20 @@ import  { WorkoutCard } from '../components/workoutcard'
 
 
 
+
 interface Props{
 logStatus: boolean,
+splitState: object,
 setLogStatus:Function,
-setUsername: Function
+setUsername: Function,
+setSplitState: Function,
+
 }
 
 
-export const Home:  React.FunctionComponent<Props> = ({setLogStatus, setUsername, logStatus})=>{
+export const Home:  React.FunctionComponent<Props> = ({setLogStatus, setUsername, logStatus ,setSplitState, splitState})=>{
 
+  
 
 const iniFormVal = {
   username: '',
@@ -24,6 +29,7 @@ const iniFormVal = {
 
 const [formVal, setFormVal]= useState(iniFormVal)
 const [splits, setSplits]= useState([])
+
 
 
 const GetSplits = async () => {
@@ -55,6 +61,8 @@ useEffect(()=>{
 },[])
 
 
+
+
 const logInStuff =
 <div className="form-div">
   <form onSubmit={login} >
@@ -66,10 +74,16 @@ const logInStuff =
 
 
 const splitsDisplay = 
-<div>
+<section className="split-card-container">
   <h1>Split Feed</h1>
-  <WorkoutCard splits={splits}/>
-</div>
+  <div>
+    {splits.map((split: any)=>(
+    <div key={split.id}>
+    <WorkoutCard split={split} setSplitState={setSplitState}/>
+    </div>
+    ))}   
+  </div>
+</section>
 
 return(
   <div className="home-page">

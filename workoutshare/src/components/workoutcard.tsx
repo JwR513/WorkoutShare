@@ -1,23 +1,37 @@
-import { Link } from "react-router-dom"
+import { Link, Navigate } from "react-router-dom"
+import { useNavigate} from 'react-router-dom'
+
 
 interface Props{
-  splits: any
+  split: any,
+  setSplitState: Function,
+  
 }
 
+export const WorkoutCard: React.FunctionComponent<Props>=({split,setSplitState})=>{
 
-export const WorkoutCard: React.FunctionComponent<Props>=({splits})=>{
+  let navigate = useNavigate()
 
+const stateSetter =(e:any)=>{
+  e.preventDefault()
+  setSplitState(split)
+  navigate(`/splits/${split.id}`)
+}
+  
   return(
-    <div>
-    {splits.map((split: any)=>(
-    <section key={split.id}>
-      <div key ={split.id}>
-        <p>{split.name}</p>
-        <p>Created by: {split.owner}</p>
-        {/* <Link to='/mysplits'>{split.splitarea}</Link> */}
-      </div>
-    </section>
-    ))}
+    <div className="split-container">
+    <form onSubmit={stateSetter}>
+      <button type='submit'>
+        <section >
+          <div key ={split.id}>
+            <p>{split.id}</p>
+            <p>{split.name}</p>
+            <p>Created by: {split.owner}</p>
+            {/* <Link to='/mysplits'>{split.splitarea}</Link> */}
+          </div>
+        </section>
+      </button>
+    </form>
     </div>
   )
 }

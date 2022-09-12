@@ -1,6 +1,4 @@
-import axios from "axios"
 import { useState } from "react"
-import { Server } from "../components/globals"
 import { RegisterUser} from "../services/auth"
 
 
@@ -37,7 +35,7 @@ const[success, setSuccess]=useState(false)
         <input type="text" placeholder="username" name="username" value={formValues.username} onChange={signUpFormVal} autoComplete="username"/>
         <input type="text" placeholder="email" name="email" value={formValues.email} onChange={signUpFormVal}/>
         <input type="password" placeholder="password" name="password" value={formValues.password}onChange={signUpFormVal} autoComplete='new-password'/>
-        <input type="password" placeholder=" confirm password" name="confirmPassword" 
+        <input type="password" placeholder=" confirm password" name="confirmPassword"  autoComplete="new-password"
         onChange={confPasswordChange}/>
         <input type='submit'/>
       </form>
