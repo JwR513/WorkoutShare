@@ -1,20 +1,33 @@
 import { Link, Navigate } from "react-router-dom"
 import { useNavigate} from 'react-router-dom'
+import axios from 'axios'
 
 
 interface Props{
   split: any,
   setSplitState: Function,
+  setUsersInfo: Function
   
 }
 
-export const WorkoutCard: React.FunctionComponent<Props>=({split,setSplitState})=>{
+export const WorkoutCard: React.FunctionComponent<Props>=({split,setSplitState, setUsersInfo})=>{
 
   let navigate = useNavigate()
+  
+  const users = split.users
+  const muscle = split.splitarea
+  let arr: any = []
 
-const stateSetter =(e:any)=>{
+
+  const getInfo = async () =>{
+    let res = await axios.all(users.map((endpoint: string) =>axios.get(endpoint)))
+    setUsersInfo(res)
+  }
+
+const stateSetter = async (e:any)=>{
   e.preventDefault()
   setSplitState(split)
+  getInfo()
   navigate(`/splits/${split.id}`)
 }
   

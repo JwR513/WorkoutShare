@@ -5,40 +5,19 @@ import { TupleType, TupleTypeNode } from "typescript";
 
 
 interface Props{
-  splitState: any
+  splitState: any,
+  userInfo: any,
 }
 
 
-export const SplitDetail: React.FunctionComponent<Props>=({splitState})=>{
+export const SplitDetail: React.FunctionComponent<Props>=({splitState, userInfo})=>{
+
+
 let { splitId }:any = useParams()
-const [muscles, setMuscles]= useState([])
-
-
-const users = splitState.users
-const muscle = splitState.splitarea
-let arr: any = []
-
-
-
-
-const getInfo = async () =>{
-  let res = await axios.all(users.map((endpoint: string) =>axios.get(endpoint)))
-  res.forEach((response: any)=>{
-    arr.push(response.data)
-  })
-  let names :any= []
-  arr.forEach((element:any) => {
-    names.push(element.username)
-  });
-
-}
 
 useEffect(()=>{
-  console.log(splitState)
-  getInfo()
-  },[])
 
-
+},[splitState])
 
   const splitNotFound =()=>{
     if(splitState.id != parseInt(splitId)){
@@ -54,7 +33,7 @@ useEffect(()=>{
           <h3>Author: {splitState.owner}</h3>
           <p>{splitState.splitarea}</p>
           <div>
-            {}
+            
           </div>
         </div>
       )

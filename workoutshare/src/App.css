@@ -21,6 +21,11 @@ flex-direction: column;
   flex-direction: column;
   margin: 10px;
 }
+.split-feed{
+  background-color: #333;
+  margin: 50px;
+  height: 100vh;
+}
 .terinary-div{
   display: flex;
   flex-direction: column;
@@ -33,7 +38,6 @@ flex-direction: column;
 }
 #nav-btn{
   float: left;
-  position: fixed;
 }
 a{
   margin: 0px 10px;

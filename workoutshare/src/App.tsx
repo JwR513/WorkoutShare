@@ -23,7 +23,7 @@ const [clicked, setClicked]= useState(true)
 const [logStatus, setLogStatus] =useState(false)
 const [username,setUsername]=useState('')
 const[ splitState, setSplitState] = useState(iniSplitState)
-
+const [usersInfo, setUsersInfo]= useState([])
 
 const navHandleClick =()=>{
   if(clicked){
@@ -46,15 +46,15 @@ useEffect(()=>{
 
   return (
     <div>
-      {clicked ? <Nav setUsername={setUsername} logStatus={logStatus}/> : obtn }
+      {clicked ? <Nav setUsername={setUsername} logStatus={logStatus} setLogStatus={setLogStatus}/> : obtn }
       {terALT()}
       <div className="App">
         <Routes>
-          <Route path='/' element={<Home setUsername={setUsername} logStatus={logStatus} setLogStatus={setLogStatus} setSplitState={setSplitState} splitState={splitState} />}/>
+          <Route path='/' element={<Home setUsername={setUsername} logStatus={logStatus} setLogStatus={setLogStatus} setSplitState={setSplitState} splitState={splitState}  setUsersInfo={setUsersInfo}/>}/>
           <Route path='/profile' element={<Profile username={username} logStatus={logStatus} setLogStatus={setLogStatus}/>}/>
           <Route path='/mysplits' element={<MySplits />}/>
           <Route path='/register' element={<RegisterPage />} />
-          <Route path='/splits/:splitId' element={<SplitDetail splitState={splitState}  />}/>
+          <Route path='/splits/:splitId' element={<SplitDetail splitState={splitState} userInfo={usersInfo}  />}/>
         </Routes>
       </div>
     </div>

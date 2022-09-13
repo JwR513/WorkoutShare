@@ -1,8 +1,12 @@
 import { useState } from "react"
+import { Navigate } from "react-router-dom"
 import { RegisterUser} from "../services/auth"
-
+import { useNavigate } from "react-router-dom"
 
 export const RegisterPage =()=>{
+
+
+ const navigate = useNavigate()
 
 const[success, setSuccess]=useState(false)
 
@@ -24,6 +28,7 @@ const[success, setSuccess]=useState(false)
     if(conf ===  formValues.password){
       await RegisterUser(formValues)
       setSuccess(true)
+      navigate('/')
     }else{
 
     }
@@ -33,7 +38,7 @@ const[success, setSuccess]=useState(false)
     <div className="form-div">
       <form onSubmit={signUpCall}>
         <input type="text" placeholder="username" name="username" value={formValues.username} onChange={signUpFormVal} autoComplete="username"/>
-        <input type="text" placeholder="email" name="email" value={formValues.email} onChange={signUpFormVal}/>
+        <input type="text" placeholder="email" name="email" value={formValues.email} onChange={signUpFormVal} autoComplete="email"/>
         <input type="password" placeholder="password" name="password" value={formValues.password}onChange={signUpFormVal} autoComplete='new-password'/>
         <input type="password" placeholder=" confirm password" name="confirmPassword"  autoComplete="new-password"
         onChange={confPasswordChange}/>

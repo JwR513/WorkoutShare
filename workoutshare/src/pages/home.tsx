@@ -14,11 +14,11 @@ splitState: object,
 setLogStatus:Function,
 setUsername: Function,
 setSplitState: Function,
-
+setUsersInfo: Function,
 }
 
 
-export const Home:  React.FunctionComponent<Props> = ({setLogStatus, setUsername, logStatus ,setSplitState, splitState})=>{
+export const Home:  React.FunctionComponent<Props> = ({setLogStatus, setUsername, logStatus ,setSplitState, splitState, setUsersInfo})=>{
 
   
 
@@ -46,7 +46,6 @@ const login = async(e: any) =>{
   e.preventDefault()
   await SignInUser(formVal)
   setUsername(formVal.username)
-  
   setLogStatus(true)
   GetSplits()
 }
@@ -76,10 +75,10 @@ const logInStuff =
 const splitsDisplay = 
 <section className="split-card-container">
   <h1>Split Feed</h1>
-  <div>
+  <div className="split-feed">
     {splits.map((split: any)=>(
     <div key={split.id}>
-    <WorkoutCard split={split} setSplitState={setSplitState}/>
+    <WorkoutCard split={split} setSplitState={setSplitState} setUsersInfo={setUsersInfo}/>
     </div>
     ))}   
   </div>
