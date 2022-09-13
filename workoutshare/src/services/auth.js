@@ -61,3 +61,12 @@ export const CreateSplit = async (data) => {
 //     throw error
 //   }
 // }
+
+export const muscleCall = async () => {
+  try {
+    let res = await Client.get('/splitarea/')
+    return res.data
+  } catch (error) {
+    throw error
+  }
+}

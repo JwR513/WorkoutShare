@@ -7,7 +7,8 @@ import { useEffect, useState } from 'react';
 import { MySplits } from './pages/mysplits'
 import { RegisterPage } from './pages/register';
 import { SplitDetail } from './components/splitDetail';
-import { CreateSplit } from './components/splitcreate';
+import { CreateSplitPage } from './components/splitcreate';
+import axios from 'axios';
 
 const App:React.FunctionComponent =() => {
   
@@ -22,7 +23,9 @@ const iniSplitState = {
 const [clicked, setClicked]= useState(true)
 const [logStatus, setLogStatus] =useState(false)
 const [username,setUsername]=useState('')
-const[ splitState, setSplitState] = useState(iniSplitState)
+const [ splitState, setSplitState] = useState(iniSplitState)
+const [muscleInfo, setMuscleInfo] =useState()
+const [splitUserInfo, setSplitUserInfo]= useState()
 const [usersInfo, setUsersInfo]= useState([])
 
 const navHandleClick =()=>{
@@ -39,8 +42,11 @@ const terALT =()=>{
     return obtn
   }
 }
+
+
+
 useEffect(()=>{
-  console.log(splitState)
+
 },[splitState])
 
 
@@ -55,7 +61,7 @@ useEffect(()=>{
           <Route path='/mysplits' element={<MySplits />}/>
           <Route path='/register' element={<RegisterPage />} />
           <Route path='/splits/:splitId' element={<SplitDetail splitState={splitState} userInfo={usersInfo}  />}/>
-          <Route path='/splitCreate' element={<CreateSplit username={username} />}/>
+          <Route path='/splitCreate' element={<CreateSplitPage username={username} />}/>
         </Routes>
       </div>
     </div>

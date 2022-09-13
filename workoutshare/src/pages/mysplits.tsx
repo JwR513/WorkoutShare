@@ -1,7 +1,7 @@
 export const MySplits =()=>{
   return(
     <div>
-      <h1>My splits page</h1>
+      <h1>Work in Progress</h1>
       
     </div>
   )
