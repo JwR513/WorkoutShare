@@ -8,6 +8,7 @@ import { MySplits } from './pages/mysplits'
 import { RegisterPage } from './pages/register';
 import { SplitDetail } from './components/splitDetail';
 import { CreateSplitPage } from './components/splitcreate';
+import { Server } from './components/globals';
 import axios from 'axios';
 
 const App:React.FunctionComponent =() => {
@@ -43,10 +44,19 @@ const terALT =()=>{
   }
 }
 
+const muscleCall = async () => {
+  try {
+    let res = await axios.get(`${Server}/splitarea/`)
+    setMuscleInfo(res.data)
+    console.log(res.data)
+  } catch (error) {
+    throw error
+  }
+}
 
 
 useEffect(()=>{
-
+muscleCall()
 },[splitState])
 
 
@@ -61,7 +71,7 @@ useEffect(()=>{
           <Route path='/mysplits' element={<MySplits />}/>
           <Route path='/register' element={<RegisterPage />} />
           <Route path='/splits/:splitId' element={<SplitDetail splitState={splitState} userInfo={usersInfo}  />}/>
-          <Route path='/splitCreate' element={<CreateSplitPage username={username} />}/>
+          <Route path='/splitCreate' element={<CreateSplitPage username={username} muscleInfo={muscleInfo} />}/>
         </Routes>
       </div>
     </div>

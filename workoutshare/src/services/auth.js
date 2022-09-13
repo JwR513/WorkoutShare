@@ -1,7 +1,6 @@
 import Client from './api'
 import { Server } from '../components/globals'
 import axios from 'axios'
-import { idText } from 'typescript'
 
 //authenticate user
 export const SignInUser = async (data) => {
@@ -61,12 +60,3 @@ export const CreateSplit = async (data) => {
 //     throw error
 //   }
 // }
-
-export const muscleCall = async () => {
-  try {
-    let res = await Client.get('/splitarea/')
-    return res.data
-  } catch (error) {
-    throw error
-  }
-}
