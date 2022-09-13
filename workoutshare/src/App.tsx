@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import { MySplits } from './pages/mysplits'
 import { RegisterPage } from './pages/register';
 import { SplitDetail } from './components/splitDetail';
-import { useNavigate } from "react-router-dom"
+import { CreateSplit } from './components/splitcreate';
 
 const App:React.FunctionComponent =() => {
   
@@ -55,6 +55,7 @@ useEffect(()=>{
           <Route path='/mysplits' element={<MySplits />}/>
           <Route path='/register' element={<RegisterPage />} />
           <Route path='/splits/:splitId' element={<SplitDetail splitState={splitState} userInfo={usersInfo}  />}/>
+          <Route path='/splitCreate' element={<CreateSplit username={username} />}/>
         </Routes>
       </div>
     </div>
