@@ -35,6 +35,7 @@ const [splits, setSplits]= useState([])
 const GetSplits = async () => {
   const res = await axios.get(`${Server}/splits/`)
   setSplits(res.data)
+  console.log(res.data)
 }
 
 const handleChange = (e: any)=>{

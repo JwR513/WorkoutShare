@@ -26,7 +26,7 @@ const [logStatus, setLogStatus] =useState(false)
 const [username,setUsername]=useState('')
 const [ splitState, setSplitState] = useState(iniSplitState)
 const [muscleInfo, setMuscleInfo] =useState()
-const [splitUserInfo, setSplitUserInfo]= useState()
+const [splitUserInfo, setSplitUserInfo]= useState([])
 const [usersInfo, setUsersInfo]= useState([])
 
 const navHandleClick =()=>{
@@ -54,9 +54,21 @@ const muscleCall = async () => {
   }
 }
 
+const userCall = async () => {
+  try {
+    let res = await axios.get(`${Server}/users/`)
+    setSplitUserInfo(res.data)
+    console.log(res.data)
+  } catch (error) {
+    throw error
+  }
+}
+
+
 
 useEffect(()=>{
 muscleCall()
+userCall()
 },[splitState])
 
 
@@ -71,7 +83,7 @@ muscleCall()
           <Route path='/mysplits' element={<MySplits />}/>
           <Route path='/register' element={<RegisterPage />} />
           <Route path='/splits/:splitId' element={<SplitDetail splitState={splitState} userInfo={usersInfo}  />}/>
-          <Route path='/splitCreate' element={<CreateSplitPage username={username} muscleInfo={muscleInfo} />}/>
+          <Route path='/splitCreate' element={<CreateSplitPage username={username} muscleInfo={muscleInfo} splitUserInfo={splitUserInfo} />}/>
         </Routes>
       </div>
     </div>
