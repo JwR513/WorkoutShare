@@ -26,6 +26,7 @@ const [logStatus, setLogStatus] =useState(false)
 const [ splitState, setSplitState] = useState(iniSplitState)
 const [muscles, setMuscles] = useState([])
 const [userInfo, setUserInfo] =useState()
+const [muscleDetail , setMuscleDetail ]= useState()
 
 const navHandleClick =()=>{
   if(clicked){
@@ -50,11 +51,11 @@ const terALT =()=>{
           <Route path='/' element={<Home userInfo={userInfo} logStatus={logStatus} setLogStatus={setLogStatus} setSplitState={setSplitState} splitState={splitState}  setUserInfo={setUserInfo} setMuscles={setMuscles} muscles={muscles}/>}/>
           <Route path='/profile' element={<Profile userInfo={userInfo} setUserInfo={setUserInfo} logStatus={logStatus} />}/>
           <Route path='/register' element={<RegisterPage />} />
-          <Route path='/splits/:splitId' element={<SplitDetail splitState={splitState} muscles={muscles} />}/>
+          <Route path='/splits/:splitId' element={<SplitDetail splitState={splitState} muscles={muscles}  setMuscleDetail={setMuscleDetail} />}/>
           <Route path='/splitCreate' element={
           <CreateSplitPage  />}/>
           <Route path='/mysplits' element={<PersonalSplits logStatus={logStatus} />}/>
-          <Route path='/muscleDetail/:muscleId' element={<MuscleDetail />}/>
+          <Route path='/muscleDetail/:muscleId' element={<MuscleDetail muscleDetail={muscleDetail}/>}/>
         </Routes>
       </div>
     </div>

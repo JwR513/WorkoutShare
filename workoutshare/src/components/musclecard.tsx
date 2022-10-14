@@ -1,17 +1,17 @@
 import { useNavigate } from "react-router-dom"
 
 interface props {
-muscle:  any
+muscle:  any,
+setMuscleDetail: Function
 }
 
 
-export const MuscleCard: React.FunctionComponent<props> =({muscle})=>{
+export const MuscleCard: React.FunctionComponent<props> =({muscle, setMuscleDetail})=>{
 const navigate = useNavigate()
 
 const navigator =()=>{
-
+setMuscleDetail(muscle)
 navigate(`/muscleDetail/${muscle.id}`)
-
 }
 
 

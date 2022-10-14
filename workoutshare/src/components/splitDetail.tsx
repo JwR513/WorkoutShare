@@ -9,18 +9,18 @@ import { MuscleDetail } from "./muscleDetail";
 
 interface Props{
   splitState: any,
-  muscles: any
+  muscles: any,
+  setMuscleDetail: Function,
+
 }
 
 
-export const SplitDetail: React.FunctionComponent<Props>=({splitState, muscles})=>{
+export const SplitDetail: React.FunctionComponent<Props>=({splitState, muscles, setMuscleDetail})=>{
 
 
 let { splitId }:any = useParams()
 
 useEffect(()=>{
-  console.log(splitState)
-  console.log(muscles)
 },[splitState])
 
   const splitNotFound =()=>{
@@ -38,7 +38,7 @@ useEffect(()=>{
           <ul>
             {muscles.map((muscle: any)=>(
           <div key={muscle.id}>
-            {<MuscleCard muscle={muscle}/>}
+            {<MuscleCard muscle={muscle}  setMuscleDetail={setMuscleDetail}/>}
           </div>  
         ))}
           </ul>
