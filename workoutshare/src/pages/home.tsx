@@ -1,7 +1,7 @@
 import axios from "axios"
 import { useState, useEffect } from "react"
 import { Server } from '../components/globals'
-import {SignInUser } from "../services/auth"
+import {CheckSession, SignInUser } from "../services/auth"
 import  { WorkoutCard } from '../components/workoutcard'
 
 
@@ -9,21 +9,24 @@ import  { WorkoutCard } from '../components/workoutcard'
 
 
 interface Props{
+muscles: any,
 logStatus: boolean,
 splitState: object,
 setLogStatus:Function,
-setUsername: Function,
 setSplitState: Function,
-setUsersInfo: Function,
+setUserInfo: Function,
+setMuscles: Function,
+userInfo: any,
 }
 
 
-export const Home:  React.FunctionComponent<Props> = ({setLogStatus, setUsername, logStatus ,setSplitState, splitState, setUsersInfo})=>{
+
+export const Home:  React.FunctionComponent<Props> = ({setLogStatus, logStatus ,setSplitState, splitState, setUserInfo, setMuscles, userInfo, muscles})=>{
 
   
 
 const iniFormVal = {
-  username: '',
+  email: '',
   password: ''
 }
 
@@ -33,8 +36,9 @@ const [splits, setSplits]= useState([])
 
 
 const GetSplits = async () => {
-  const res = await axios.get(`${Server}/splits/`)
+  const res = await axios.get(`${Server}/api/split/`)
   setSplits(res.data)
+  
   console.log(res.data)
 }
 
@@ -46,19 +50,20 @@ const handleChange = (e: any)=>{
 const login = async(e: any) =>{
   e.preventDefault()
   await SignInUser(formVal)
-  setUsername(formVal.username)
-  setLogStatus(true)
+  await setLogStatus(true)
   GetSplits()
 }
 
 
+
 useEffect(()=>{
-    let token =localStorage.getItem('token')
+  let token = localStorage.getItem('token')
     if(token){
+    CheckSession()
     setLogStatus(true)
-    }
     GetSplits()
-},[])
+    }    
+},[setLogStatus])
 
 
 
@@ -66,20 +71,22 @@ useEffect(()=>{
 const logInStuff =
 <div className="form-div">
   <form onSubmit={login} >
-    <input type="text" placeholder="Username" name="username" autoComplete="username" onChange={handleChange}/>
+    <input type="text" placeholder="Email" name="email" autoComplete="email" onChange={handleChange}/>
     <input type="password" placeholder="Password" name="password" autoComplete="current-password" onChange={handleChange}/>
     <input type="submit"/>
   </form>
 </div>
 
 
+
 const splitsDisplay = 
 <section className="split-card-container">
-  <h1>Split Feed</h1>
+  <h3>Split Feed</h3>
   <div className="split-feed">
     {splits.map((split: any)=>(
     <div key={split.id}>
-    <WorkoutCard split={split} setSplitState={setSplitState} setUsersInfo={setUsersInfo}/>
+    <WorkoutCard split={split} setSplitState={setSplitState} setMuscles={setMuscles}
+   />
     </div>
     ))}   
   </div>

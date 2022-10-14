@@ -1,45 +1,42 @@
-import axios from 'axios'
 import { useState } from 'react'
-import { CreateSplit } from '../services/auth'
+import { createSplit } from '../services/auth'
+import { useNavigate } from 'react-router-dom'
+import { createUserSplit } from '../services/auth'
+
 
 interface Props{
-  username: string,
-  muscleInfo: any, 
-  splitUserInfo: any
 }
 
-export const CreateSplitPage: React.FunctionComponent<Props> =({username, muscleInfo, splitUserInfo})=>{
+export const CreateSplitPage: React.FunctionComponent<Props> =()=>{
+  const nav = useNavigate()
 
-const[newSplit , setNewSplit ] = useState({})
+const[splitName , setSplitName ] = useState({})
+const [split, setSplit] = useState()
 
-const SubmitHandler = async()=>{
-  setNewSplit({...newSplit, owner: username})
-  CreateSplit(newSplit)
-}
-
-const newSplitForm = (e: any) =>{
-  setNewSplit({...newSplit, [e.target.name]: e.target.value }) 
-  
+const nameHandler = (e: any)=>{
+  e.preventDefault()
+  setSplitName({[e.target.name]:e.target.value})
 }
 
 
 
-
+const CreateSplit = async (e: any) => {
+  e.preventDefault()
+  await createSplit(splitName)
+  let splitId = localStorage.getItem('splitId')
+  let userId =localStorage.getItem('userId')
+  const body ={
+    userId: userId,
+    splitId: splitId
+  }
+  createUserSplit(body)
+  nav('/')
+}
 
   return(
     <div>
-    <form onSubmit={SubmitHandler}>
-      <input type="text" name="name" onChange={newSplitForm} placeholder="Split Name"/>
-      <select name="muscle" defaultValue='' onChange={newSplitForm}>
-        {muscleInfo.map((muscle:any)=>(
-          <option  key={muscle.id} value={muscle.id}>{muscle.name}</option>
-        ))}
-      </select>
-      <select name="user" defaultValue='' onChange={newSplitForm}>
-        {splitUserInfo.map((user:any)=>(
-          <option  key={user.id} value={user.id}>{user.username}</option>
-        ))}
-      </select>
+    <form onSubmit={CreateSplit}>
+      <input type="text" name="name" onChange={nameHandler} placeholder="Split Name"/>
       <button type='submit'>Submit</button>
 
     </form>

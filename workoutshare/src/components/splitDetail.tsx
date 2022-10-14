@@ -1,22 +1,26 @@
+
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from 'axios'
-import { TupleType, TupleTypeNode } from "typescript";
+import { MuscleCard } from "./musclecard";
+import { MuscleDetail } from "./muscleDetail";
+
+
 
 
 interface Props{
   splitState: any,
-  userInfo: any,
+  muscles: any
 }
 
 
-export const SplitDetail: React.FunctionComponent<Props>=({splitState, userInfo})=>{
+export const SplitDetail: React.FunctionComponent<Props>=({splitState, muscles})=>{
 
 
 let { splitId }:any = useParams()
 
 useEffect(()=>{
-
+  console.log(splitState)
+  console.log(muscles)
 },[splitState])
 
   const splitNotFound =()=>{
@@ -30,11 +34,14 @@ useEffect(()=>{
       return (
         <div>
           <h1>{splitState.name}</h1>
-          <h3>Author: {splitState.owner}</h3>
           <p>{splitState.splitarea}</p>
-          <div>
-            
-          </div>
+          <ul>
+            {muscles.map((muscle: any)=>(
+          <div key={muscle.id}>
+            {<MuscleCard muscle={muscle}/>}
+          </div>  
+        ))}
+          </ul>
         </div>
       )
     }

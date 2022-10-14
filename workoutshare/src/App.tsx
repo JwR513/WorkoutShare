@@ -1,15 +1,15 @@
 import './App.css';
-import {Routes, Route} from 'react-router-dom'
+import { Routes, Route, Router } from 'react-router-dom'
 import { Home } from './pages/home';
 import { Nav } from './components/nav';
 import{ Profile } from './pages/profilepage'
-import { useEffect, useState } from 'react';
-import { MySplits } from './pages/mysplits'
+import { useState } from 'react';
 import { RegisterPage } from './pages/register';
 import { SplitDetail } from './components/splitDetail';
 import { CreateSplitPage } from './components/splitcreate';
-import { Server } from './components/globals';
-import axios from 'axios';
+import { PersonalSplits } from './pages/personalsplits';
+import { MuscleDetail } from './components/muscleDetail';
+
 
 const App:React.FunctionComponent =() => {
   
@@ -23,11 +23,9 @@ const iniSplitState = {
 
 const [clicked, setClicked]= useState(true)
 const [logStatus, setLogStatus] =useState(false)
-const [username,setUsername]=useState('')
 const [ splitState, setSplitState] = useState(iniSplitState)
-const [muscleInfo, setMuscleInfo] =useState()
-const [splitUserInfo, setSplitUserInfo]= useState([])
-const [usersInfo, setUsersInfo]= useState([])
+const [muscles, setMuscles] = useState([])
+const [userInfo, setUserInfo] =useState()
 
 const navHandleClick =()=>{
   if(clicked){
@@ -43,47 +41,20 @@ const terALT =()=>{
     return obtn
   }
 }
-
-const muscleCall = async () => {
-  try {
-    let res = await axios.get(`${Server}/splitarea/`)
-    setMuscleInfo(res.data)
-    console.log(res.data)
-  } catch (error) {
-    throw error
-  }
-}
-
-const userCall = async () => {
-  try {
-    let res = await axios.get(`${Server}/users/`)
-    setSplitUserInfo(res.data)
-    console.log(res.data)
-  } catch (error) {
-    throw error
-  }
-}
-
-
-
-useEffect(()=>{
-muscleCall()
-userCall()
-},[splitState])
-
-
   return (
     <div>
-      {clicked ? <Nav setUsername={setUsername} logStatus={logStatus} setLogStatus={setLogStatus}/> : obtn }
+      {clicked ? <Nav  logStatus={logStatus} setLogStatus={setLogStatus}/> : obtn }
       {terALT()}
       <div className="App">
         <Routes>
-          <Route path='/' element={<Home setUsername={setUsername} logStatus={logStatus} setLogStatus={setLogStatus} setSplitState={setSplitState} splitState={splitState}  setUsersInfo={setUsersInfo}/>}/>
-          <Route path='/profile' element={<Profile username={username} logStatus={logStatus} setLogStatus={setLogStatus}/>}/>
-          <Route path='/mysplits' element={<MySplits />}/>
+          <Route path='/' element={<Home userInfo={userInfo} logStatus={logStatus} setLogStatus={setLogStatus} setSplitState={setSplitState} splitState={splitState}  setUserInfo={setUserInfo} setMuscles={setMuscles} muscles={muscles}/>}/>
+          <Route path='/profile' element={<Profile userInfo={userInfo} setUserInfo={setUserInfo} logStatus={logStatus} />}/>
           <Route path='/register' element={<RegisterPage />} />
-          <Route path='/splits/:splitId' element={<SplitDetail splitState={splitState} userInfo={usersInfo}  />}/>
-          <Route path='/splitCreate' element={<CreateSplitPage username={username} muscleInfo={muscleInfo} splitUserInfo={splitUserInfo} />}/>
+          <Route path='/splits/:splitId' element={<SplitDetail splitState={splitState} muscles={muscles} />}/>
+          <Route path='/splitCreate' element={
+          <CreateSplitPage  />}/>
+          <Route path='/mysplits' element={<PersonalSplits logStatus={logStatus} />}/>
+          <Route path='/muscleDetail/:muscleId' element={<MuscleDetail />}/>
         </Routes>
       </div>
     </div>

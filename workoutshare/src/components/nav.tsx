@@ -4,12 +4,11 @@ import { useNavigate } from 'react-router-dom'
 
 interface Props{
   logStatus: boolean,
-  setUsername: Function,
   setLogStatus: Function,
 }
 
 
-export const Nav: React.FunctionComponent<Props> =({setUsername, logStatus, setLogStatus})=>{
+export const Nav: React.FunctionComponent<Props> =({logStatus, setLogStatus})=>{
 
 const [clicked, setclicked]= useState(false)
 
@@ -25,8 +24,7 @@ let navigate =useNavigate()
 
   const logOut =()=>{
     localStorage.removeItem('token')
-    localStorage.removeItem('username')
-    setUsername('')
+    localStorage.removeItem('userId')
     setLogStatus(false)
     navigate('/')
   }
@@ -39,8 +37,8 @@ let navigate =useNavigate()
       <button onClick={handleClick}>Profile</button>
       </nav>
       {clicked ?  <div className="terinary-div">
-          <Link to='/profile'>My Profile</Link>
-          <Link to='/mysplits'>My splits</Link>
+          <Link to='/profile'>Profile</Link>
+          {/* <Link to='/mysplits'>Splits</Link> */}
           <button onClick={logOut}>Log Out</button>
         </div> : <p></p> }
       

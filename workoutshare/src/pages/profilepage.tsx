@@ -1,54 +1,78 @@
 import { useEffect, useState } from "react"
-import axios from 'axios'
+import axios from "axios"
 import { Server } from "../components/globals"
+import { userInfo } from "os"
 
 interface Props{
   logStatus: boolean,
-  setLogStatus: Function,
-  username: string
+  setUserInfo: Function,
+  userInfo: any
 }
 
-export const Profile: React.FunctionComponent<Props> = ({logStatus, username, setLogStatus}):JSX.Element =>{
+export const Profile: React.FunctionComponent<Props> = ({userInfo, setUserInfo}):JSX.Element =>{
+
+const updateForm = {
+  confPass: '',
+  password: ''
+}
 
 
-//this feels like a super suboptimal way to do this but it was the easiest way I could think of
-// may change later
+const [ updatedInfo, setUpdatedInfo] =useState(updateForm)
 
-// const getUser = async()=>{
-//   let userId 
-//   if(logStatus){
-
-//     let res = await axios.get(`${Server}/users/`)
-//     const users = res.data
-
-//   users.forEach( (user: any) => {
-//     if(user.username === username){
-//       setCurrentUser({
-//         username: user.username,
-//         email: user.email,
-//         id
-//       })
-//     }
-//   });
-// }
-// let res = await axios.get(`${Server}/users/${userId}`)
-// currentUser = res.data
-// }
+  let userId = localStorage.getItem('userId')
 
 
+  const getUserInfo=async()=>{
+    let res = await axios.get(`${Server}/api/user/wsplits/${userId}`)
+    setUserInfo(res.data)
+    console.log(res.data)
+  }
 
-// useEffect(()=>{
+const updateProfile = async (e: any)=>{
+  e.preventDefault()
+  if(updatedInfo.confPass === updatedInfo.password){
+      await axios.put(`${Server}/api/user/passUpdate/${userId}`, updatedInfo)
+      console.log('password changed')
+  }else{
+    console.log('error passwords no matchie')
+  }
+}
+
+const handleChange = (e: any)=>{
+  e.preventDefault()
+  setUpdatedInfo({ ...updatedInfo , [e.target.name]: e.target.value})
+}
+
+
+  useEffect(()=>{
+    if(userId){
+    getUserInfo()
+    }
+  },[userId])
+
+
+
+  const userInfoDis = ()=>{
+    if(userInfo){
+      return(
+      <div>
+        <h2>{userInfo.username}</h2>
+        <form onSubmit={updateProfile}>
+          <input type="password" name="password" placeholder="New Password" onChange={handleChange} autoComplete='password'/>
+          <input type="password" name="confPass" placeholder="Confirm Password" onChange={handleChange}  autoComplete='password'/>
+          <button type="submit">Submit Changes</button>
+        </form>
+
+        {/* <button onClick={}>Delete Profile</button> */}
+      </div>
+      )
+    }
+  }
   
-// },[])
 
-const loggedIn = 
+return (
 <div>
-  
+  {userInfoDis()}
 </div>
-
-  return(
-    <div>
-      <h1>This will be profile page</h1>
-    </div>
-  )
+)
 } 

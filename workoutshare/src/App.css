@@ -22,9 +22,12 @@ flex-direction: column;
   margin: 10px;
 }
 .split-feed{
+  display: flex;
+  flex-direction: column;
   background-color: #333;
   margin: 50px;
-  height: 100vh;
+  height: fit-content;
+  align-items: center;
 }
 .terinary-div{
   display: flex;
@@ -47,4 +50,14 @@ a{
 a:hover{
   color: lightgreen;
   text-decoration: underline;
+}
+.split-card{
+
+  background-color: white;
+  border: 5px solid black;
+  width: fit-content;
+}
+.muscle-card{
+  background-color: grey;
+  border: 5px solid black;
 }
