@@ -27,6 +27,8 @@ const [ splitState, setSplitState] = useState(iniSplitState)
 const [muscles, setMuscles] = useState([])
 const [userInfo, setUserInfo] =useState()
 const [muscleDetail , setMuscleDetail ]= useState()
+const [deleted,setDeleted]= useState(false)
+
 
 const navHandleClick =()=>{
   if(clicked){
@@ -48,14 +50,14 @@ const terALT =()=>{
       {terALT()}
       <div className="App">
         <Routes>
-          <Route path='/' element={<Home userInfo={userInfo} logStatus={logStatus} setLogStatus={setLogStatus} setSplitState={setSplitState} splitState={splitState}  setUserInfo={setUserInfo} setMuscles={setMuscles} muscles={muscles}/>}/>
+          <Route path='/' element={<Home logStatus={logStatus} setLogStatus={setLogStatus} setSplitState={setSplitState}  setMuscles={setMuscles} deleted={deleted} setDeleted={setDeleted} />}/>
           <Route path='/profile' element={<Profile userInfo={userInfo} setUserInfo={setUserInfo} logStatus={logStatus} />}/>
           <Route path='/register' element={<RegisterPage />} />
-          <Route path='/splits/:splitId' element={<SplitDetail splitState={splitState} muscles={muscles}  setMuscleDetail={setMuscleDetail} />}/>
+          <Route path='/splits/:splitId' element={<SplitDetail splitState={splitState} muscles={muscles}  setMuscleDetail={setMuscleDetail} setDeleted={setDeleted}/>}/>
           <Route path='/splitCreate' element={
           <CreateSplitPage  />}/>
           <Route path='/mysplits' element={<PersonalSplits logStatus={logStatus} />}/>
-          <Route path='/muscleDetail/:muscleId' element={<MuscleDetail muscleDetail={muscleDetail}/>}/>
+          <Route path='/muscleDetail/:muscleId' element={<MuscleDetail muscleDetail={muscleDetail} splitState={splitState}/>}/>
         </Routes>
       </div>
     </div>

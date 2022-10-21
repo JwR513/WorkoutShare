@@ -18,8 +18,8 @@ navigate(`/muscleDetail/${muscle.id}`)
   return (
   <form onClick={navigator} className='muscle-card'>
     <div>
-      <p>{muscle.id}</p>
       <p>{muscle.name}</p>
+      <p>{muscle.porp}</p>
     </div>
   </form>
   )

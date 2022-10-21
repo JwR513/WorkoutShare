@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
 import axios from "axios"
 import { Server } from "../components/globals"
-import { userInfo } from "os"
+import { updateProfile } from "../services/auth"
+
 
 interface Props{
   logStatus: boolean,
@@ -25,17 +26,11 @@ const [ updatedInfo, setUpdatedInfo] =useState(updateForm)
   const getUserInfo=async()=>{
     let res = await axios.get(`${Server}/api/user/wsplits/${userId}`)
     setUserInfo(res.data)
-    console.log(res.data)
   }
 
-const updateProfile = async (e: any)=>{
+const updatedProfile = async (e: any)=>{
   e.preventDefault()
-  if(updatedInfo.confPass === updatedInfo.password){
-      await axios.put(`${Server}/api/user/passUpdate/${userId}`, updatedInfo)
-      console.log('password changed')
-  }else{
-    console.log('error passwords no matchie')
-  }
+  updateProfile(updatedInfo)
 }
 
 const handleChange = (e: any)=>{
@@ -57,7 +52,7 @@ const handleChange = (e: any)=>{
       return(
       <div>
         <h2>{userInfo.username}</h2>
-        <form onSubmit={updateProfile}>
+        <form onSubmit={updatedProfile}>
           <input type="password" name="password" placeholder="New Password" onChange={handleChange} autoComplete='password'/>
           <input type="password" name="confPass" placeholder="Confirm Password" onChange={handleChange}  autoComplete='password'/>
           <button type="submit">Submit Changes</button>

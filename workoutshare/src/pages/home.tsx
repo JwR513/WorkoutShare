@@ -5,23 +5,18 @@ import {CheckSession, SignInUser } from "../services/auth"
 import  { WorkoutCard } from '../components/workoutcard'
 
 
-
-
-
 interface Props{
-muscles: any,
 logStatus: boolean,
-splitState: object,
 setLogStatus:Function,
 setSplitState: Function,
-setUserInfo: Function,
 setMuscles: Function,
-userInfo: any,
+deleted:any,
+setDeleted: Function,
 }
 
 
 
-export const Home:  React.FunctionComponent<Props> = ({setLogStatus, logStatus ,setSplitState, splitState, setUserInfo, setMuscles, userInfo, muscles})=>{
+export const Home:  React.FunctionComponent<Props> = ({setLogStatus, logStatus ,setSplitState,setMuscles,deleted })=>{
 
   
 
@@ -32,8 +27,6 @@ const iniFormVal = {
 
 const [formVal, setFormVal]= useState(iniFormVal)
 const [splits, setSplits]= useState([])
-
-
 
 const GetSplits = async () => {
   const res = await axios.get(`${Server}/api/split/`)
@@ -53,7 +46,6 @@ const login = async(e: any) =>{
 }
 
 
-
 useEffect(()=>{
   let token = localStorage.getItem('token')
     if(token){
@@ -61,10 +53,7 @@ useEffect(()=>{
     setLogStatus(true)
     GetSplits()
     }    
-},[setLogStatus])
-
-
-
+},[setLogStatus, deleted])
 
 const logInStuff =
 <div className="form-div">
@@ -75,8 +64,6 @@ const logInStuff =
   </form>
 </div>
 
-
-
 const splitsDisplay = 
 <section className="split-card-container">
   <h3>Split Feed</h3>
@@ -84,7 +71,7 @@ const splitsDisplay =
     {splits.map((split: any)=>(
     <div key={split.id}>
     <WorkoutCard split={split} setSplitState={setSplitState} setMuscles={setMuscles}
-   />
+  />
     </div>
     ))}   
   </div>

@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useNavigate} from 'react-router-dom'
 
 
@@ -5,11 +6,10 @@ import { useNavigate} from 'react-router-dom'
 interface Props{
   split: any,
   setSplitState: Function,
-  setMuscles: Function,
-  
+  setMuscles: Function,  
 }
 
-export const WorkoutCard: React.FunctionComponent<Props>=({split,setSplitState, setMuscles})=>{
+export const WorkoutCard: React.FunctionComponent<Props>=({split,setSplitState, setMuscles, })=>{
 
 let navigate = useNavigate()
   

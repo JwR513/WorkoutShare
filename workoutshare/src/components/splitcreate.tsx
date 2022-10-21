@@ -11,7 +11,6 @@ export const CreateSplitPage: React.FunctionComponent<Props> =()=>{
   const nav = useNavigate()
 
 const[splitName , setSplitName ] = useState({})
-const [split, setSplit] = useState()
 
 const nameHandler = (e: any)=>{
   e.preventDefault()
