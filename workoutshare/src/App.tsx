@@ -9,6 +9,8 @@ import { SplitDetail } from './components/splitDetail';
 import { CreateSplitPage } from './components/splitcreate';
 import { PersonalSplits } from './pages/personalsplits';
 import { MuscleDetail } from './components/muscleDetail';
+import { Server } from './components/globals';
+import  axios from 'axios';
 
 
 const App:React.FunctionComponent =() => {
@@ -28,7 +30,12 @@ const [muscles, setMuscles] = useState([])
 const [userInfo, setUserInfo] =useState()
 const [muscleDetail , setMuscleDetail ]= useState()
 const [deleted,setDeleted]= useState(false)
+const [splits, setSplits]= useState([])
 
+const GetSplits = async () => {
+  const res = await axios.get(`${Server}/api/split/`)
+  setSplits(res.data)
+}
 
 const navHandleClick =()=>{
   if(clicked){
@@ -37,7 +44,7 @@ const navHandleClick =()=>{
     setClicked(true)
   }
 }
-const obtn = <button onClick={navHandleClick} id='nav-btn'>onclick</button>
+const obtn = <button onClick={navHandleClick} id='nav-btn'>{clicked ? <p>Hide</p> : <p>Show</p>}</button>
 
 const terALT =()=>{
   if(clicked){
@@ -50,10 +57,10 @@ const terALT =()=>{
       {terALT()}
       <div className="App">
         <Routes>
-          <Route path='/' element={<Home logStatus={logStatus} setLogStatus={setLogStatus} setSplitState={setSplitState}  setMuscles={setMuscles} deleted={deleted} setDeleted={setDeleted} />}/>
+          <Route path='/' element={<Home logStatus={logStatus} setLogStatus={setLogStatus} setSplitState={setSplitState}  setMuscles={setMuscles} deleted={deleted} setDeleted={setDeleted} GetSplits={GetSplits} splits={splits} />}/>
           <Route path='/profile' element={<Profile userInfo={userInfo} setUserInfo={setUserInfo} logStatus={logStatus} />}/>
           <Route path='/register' element={<RegisterPage />} />
-          <Route path='/splits/:splitId' element={<SplitDetail splitState={splitState} muscles={muscles}  setMuscleDetail={setMuscleDetail} setDeleted={setDeleted}/>}/>
+          <Route path='/splits/:splitId' element={<SplitDetail splitState={splitState} muscles={muscles}  setMuscleDetail={setMuscleDetail} setDeleted={setDeleted} GetSplits={GetSplits}/>}/>
           <Route path='/splitCreate' element={
           <CreateSplitPage  />}/>
           <Route path='/mysplits' element={<PersonalSplits logStatus={logStatus} />}/>
@@ -61,8 +68,6 @@ const terALT =()=>{
         </Routes>
       </div>
     </div>
-    
-  
   );
 }
 

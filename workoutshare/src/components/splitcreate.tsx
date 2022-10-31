@@ -34,10 +34,10 @@ const CreateSplit = async (e: any) => {
 
   return(
     <div>
+      <h1>Create a new split</h1>
     <form onSubmit={CreateSplit}>
       <input type="text" name="name" onChange={nameHandler} placeholder="Split Name"/>
       <button type='submit'>Submit</button>
-
     </form>
     </div>
   )

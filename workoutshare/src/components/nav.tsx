@@ -32,9 +32,9 @@ let navigate =useNavigate()
   const logged =
   <div className="nav-contents">  
     <nav className="nav-bar">
+      <button onClick={handleClick} id='profile'>Profile</button>
       <Link to='/'>Home</Link>
       <Link to='/splitcreate'>New Split</Link>
-      <button onClick={handleClick}>Profile</button>
       </nav>
       {clicked ?  <div className="terinary-div">
           <Link to='/profile'>Profile</Link>

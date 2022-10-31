@@ -1,4 +1,5 @@
-import { useState } from 'react'
+
+import { useEffect } from 'react'
 import { useNavigate} from 'react-router-dom'
 
 
@@ -12,7 +13,7 @@ interface Props{
 export const WorkoutCard: React.FunctionComponent<Props>=({split,setSplitState, setMuscles, })=>{
 
 let navigate = useNavigate()
-  
+
 
 const stateSetter = async (e:any)=>{
   e.preventDefault()
@@ -26,8 +27,8 @@ const stateSetter = async (e:any)=>{
       <form onClick={stateSetter} className='split-card'>
           <section >
             <div key ={split.id}>
-              <p>{split.id}</p>
               <p>{split.name}</p>
+              <p>Number of Days: {split.muscles.length}</p>
               {/* <Link to='/mysplits'>{split.splitarea}</Link> */}
             </div>
           </section>

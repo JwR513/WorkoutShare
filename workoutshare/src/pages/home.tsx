@@ -7,16 +7,18 @@ import  { WorkoutCard } from '../components/workoutcard'
 
 interface Props{
 logStatus: boolean,
+deleted:any,
+splits: any,
 setLogStatus:Function,
 setSplitState: Function,
 setMuscles: Function,
-deleted:any,
 setDeleted: Function,
+GetSplits: Function,
 }
 
 
 
-export const Home:  React.FunctionComponent<Props> = ({setLogStatus, logStatus ,setSplitState,setMuscles,deleted })=>{
+export const Home:  React.FunctionComponent<Props> = ({setLogStatus, logStatus ,setSplitState,setMuscles,deleted, splits,GetSplits})=>{
 
   
 
@@ -26,12 +28,7 @@ const iniFormVal = {
 }
 
 const [formVal, setFormVal]= useState(iniFormVal)
-const [splits, setSplits]= useState([])
 
-const GetSplits = async () => {
-  const res = await axios.get(`${Server}/api/split/`)
-  setSplits(res.data)
-}
 
 const handleChange = (e: any)=>{
   e.preventDefault()
@@ -53,10 +50,12 @@ useEffect(()=>{
     setLogStatus(true)
     GetSplits()
     }    
-},[setLogStatus, deleted])
+},[setLogStatus, deleted, splits])
 
 const logInStuff =
 <div className="form-div">
+  <h3>Welcome To WorkoutShare</h3>
+  <h4>Login below or navigate to the signup page to create a new account</h4>
   <form onSubmit={login} >
     <input type="text" placeholder="Email" name="email" autoComplete="email" onChange={handleChange}/>
     <input type="password" placeholder="Password" name="password" autoComplete="current-password" onChange={handleChange}/>

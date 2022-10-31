@@ -9,10 +9,11 @@ interface Props{
   muscles: any,
   setMuscleDetail: Function,
   setDeleted: Function,
+  GetSplits: Function
 }
 
 
-export const SplitDetail: React.FunctionComponent<Props>=({splitState, muscles, setMuscleDetail, setDeleted})=>{
+export const SplitDetail: React.FunctionComponent<Props>=({splitState, muscles, setMuscleDetail, setDeleted, GetSplits})=>{
 
 let navigate = useNavigate()
 
@@ -43,10 +44,10 @@ const submitHandler= async(e: any)=>{
   navigate(`/`)
 }
 
-const addMuscleSubmitHandler =(e: any)=>{
+const addMuscleSubmitHandler = async(e: any)=>{
 e.preventDefault()
 AddMuscle(muscleState)
-createSplitMuscle({splitId:splitId,
+await createSplitMuscle({splitId:splitId,
 muscleId: muscleId})
 setDeleted(true)
 navigate('/')
@@ -58,6 +59,7 @@ setMuscleState({...muscleState,[e.target.name]: e.target.value})
 
 const deleteSplit = ()=>{
     DeleteSplitAndAssociation(splitId)
+    GetSplits()
     setDeleted(true)
     navigate('/')
 }
@@ -71,24 +73,25 @@ const deleteSplit = ()=>{
       )
     }else{
       return (
-        <div>
-          <h2>{splitState.name}</h2>
-          <button onClick={onEdit}>Edit</button>
-          <ul>
-            {muscles.map((muscle: any)=>(
-          <div key={muscle.id}>
-            {<MuscleCard muscle={muscle}  setMuscleDetail={setMuscleDetail} />}
-          </div>  
-            ))}
-          </ul>
-              <h4>Add a Day </h4>
-              <form onSubmit={addMuscleSubmitHandler}>
-                <input type="text"  name="name" onChange={handleMuscleChange} placeholder="Name"/>
-                <input type="text" name="porp" onChange={handleMuscleChange} placeholder="Push or Pull"/>
-                <button type="submit">Add</button>
-              </form>
-          <div> 
-
+        <div className="split-detail">
+            <h2>{splitState.name}</h2>
+            <div>
+            <button onClick={onEdit}>Edit</button>
+            <ul>
+              {muscles.map((muscle: any)=>(
+            <div key={muscle.id}>
+              {<MuscleCard muscle={muscle}  setMuscleDetail={setMuscleDetail} />}
+            </div>  
+              ))}
+            </ul>
+                <h4>Add a Day </h4>
+                <form onSubmit={addMuscleSubmitHandler}>
+                  <input type="text"  name="name" onChange={handleMuscleChange} placeholder="Name"/>
+                  <input type="text" name="porp" onChange={handleMuscleChange} placeholder="Push or Pull"/>
+                  <button type="submit">Add</button>
+                </form>
+            <div>
+              </div>
           </div>
         </div>
       )
